@@ -1,7 +1,7 @@
 import HousesList from "@/components/HousesList";
 import WizardsList from "@/components/WizardsList";
 import ElixirsList from "@/components/ElixirsList";
-import { HousesAPI, WizardsAPI, ElixirsAPI, HouseAPI, WizardAPI } from "@/types";
+import { HousesAPI, WizardsAPI, ElixirsAPI, HouseAPI as WizardAPI } from "@/types";
 import { GetServerSideProps } from "next";
 
 //Houses

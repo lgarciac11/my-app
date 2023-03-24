@@ -26,10 +26,11 @@ export type HousesAPI = HouseAPI[];
   };
   
   export type WizardAPI = {
-    elixirs: [],
-      firstName: string,
-      lastName: string
-      url: string;
+    [x: string]: any;
+    elixirs: Array<{ name: string }>;
+    firstName: string;
+    lastName: string;
+    url: string;
   };
 
   export type ElixirsAPI = {
@@ -75,6 +76,8 @@ export type HousesAPI = HouseAPI[];
     elixirs: Array<{
       name: string;
     }>;
+    firstName: string;
+    lastName: string;
   };
   
   export type Wizards = Omit<WizardsAPI, "results"> & {
