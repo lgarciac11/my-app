@@ -1,6 +1,5 @@
 import HousesList from "@/components/HousesList";
-import WizardsList from "@/components/WizardsList";
-import ElixirsList from "@/components/ElixirsList";
+import type { Houses } from '@/types';
 import { HousesAPI, WizardsAPI, ElixirsAPI, HouseAPI as WizardAPI } from "@/types";
 import { GetServerSideProps } from "next";
 
@@ -16,11 +15,11 @@ export const getServerSideProps: GetServerSideProps<{houses: Array<{
 
   try {
     const res = await fetch("https://wizard-world-api.herokuapp.com/houses");
-    const data: WizardAPI[] = await res.json();
+    const data: HousesAPI[] = await res.json();
     console.log({data})
     houses.push(
       ...data.map((house) => {
-        const name = house.firstName + " " + house.lastName;
+        const name = house.name;
         // get id from url
         const id = house.id;
         return { name, id };
