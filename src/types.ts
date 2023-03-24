@@ -1,4 +1,9 @@
-export type HousesAPI = HouseAPI[];
+export type HousesAPI = {
+  count: number;
+  next?: string;
+  previous?: string;
+  results: House[];
+};
   
   export type HouseAPI = {
     id: string;
