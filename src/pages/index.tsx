@@ -1,4 +1,151 @@
-import Head from 'next/head'
+import HousesList from "@/components/HousesList";
+import WizardsList from "@/components/WizardsList";
+import ElixirsList from "@/components/ElixirsList";
+import { HousesAPI, WizardsAPI, ElixirsAPI, HouseAPI } from "@/types";
+import { GetServerSideProps } from "next";
+
+//Houses
+export const getServerSideProps: GetServerSideProps<{houses: Array<{
+  name: string;
+  id: string;
+}>}> = async () => {
+  const houses: Array<{
+    name: string;
+    id: string;
+  }> = [];
+
+  try {
+    const res = await fetch("https://wizard-world-api.herokuapp.com/Houses");
+    const data: HouseAPI[] = await res.json();
+    console.log({data})
+    houses.push(
+      ...data.map((house) => {
+        const name = house.name;
+        // get id from url
+        const id = house.id;
+        return { name, id };
+      })
+    );
+
+    return {
+      props : {
+        houses
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return {
+    props: {
+      houses: [],
+    },
+  };
+};
+
+// //Wizards
+// export const getServerSidePropsW = async () => {
+//   const props: Array<{
+//     name: string;
+//     id: string;
+//   }> = [];
+//   try {
+//     const res = await fetch("https://swapi.dev/api/wizards");
+//     const data: WizardsAPI = await res.json();
+//     props.push(
+//       ...data.results.map((wizard) => {
+//         const name = wizard.firstName;
+//         // get id from url
+//         const id = wizard.url.split("/").slice(-2)[0];
+//         return { name, id };
+//       })
+//     );
+
+//     let next = data.next;
+//     while (next) {
+//       console.log(next);
+//       const res = await fetch(next);
+//       const data: WizardsAPI = await res.json();
+//       props.push(
+//         ...data.results.map((wizard) => {
+//           const name = wizard.firstName;
+//           // get id from url
+//           const id = wizard.url.split("/").slice(-2)[0];
+//           return { name, id };
+//         })
+//       );
+//       next = data.next;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   return {
+//     props: {
+//       data: props,
+//     },
+//   };
+// };
+
+// //Elixirs
+// export const getServerSidePropsE = async () => {
+//   const props: Array<{
+//     name: string;
+//     id: string;
+//   }> = [];
+//   try {
+//     const res = await fetch("https://swapi.dev/api/elixirs");
+//     const data: ElixirsAPI = await res.json();
+//     props.push(
+//       ...data.results.map((elixir) => {
+//         const name = elixir.name;
+//         // get id from url
+//         const id = elixir.url.split("/").slice(-2)[0];
+//         return { name, id };
+//       })
+//     );
+
+//     let next = data.next;
+//     while (next) {
+//       console.log(next);
+//       const res = await fetch(next);
+//       const data: ElixirsAPI = await res.json();
+//       props.push(
+//         ...data.results.map((elixir) => {
+//           const name = elixir.name;
+//           // get id from url
+//           const id = elixir.url.split("/").slice(-2)[0];
+//           return { name, id };
+//         })
+//       );
+//       next = data.next;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   return {
+//     props: {
+//       data: props,
+//     },
+//   };
+// };
+
+type HomeProps = {
+  houses: Array<{
+    name: string;
+    id: string;
+  }>;
+};
+
+export default function Home(props: HomeProps) {
+  console.log({props});
+  return <HousesList data={props.houses} />;
+}
+
+
+
+
+
+
+/*import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
@@ -120,4 +267,4 @@ export default function Home() {
       </main>
     </>
   )
-}
+}*/
